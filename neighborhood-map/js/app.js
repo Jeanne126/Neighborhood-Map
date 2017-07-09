@@ -56,13 +56,12 @@
            google.maps.event.addListener(marker,'click',function(){
  
             infoWindow.open(map,marker);
-            var wikiUrl='https://en.wikipedia.org/w/api.php?action=query&search="+title+"&format=json&callback=wikiCallback';
+            var wikiUrl='https://en.wikipedia.org/w/api.php?action=query&search="+title+"&format=json&origin="*"&callback=?';
 
             $.ajax({
                 type:'GET',
                 url:wikiUrl,
-                dataType:'jsonp',
-                jsonp:'callback'
+                dataType:'jsonp'
                 }).done(function(data){
                     infoWindow.setContent(data);
                 }).fail(function(data){   
