@@ -19,11 +19,9 @@
       <label for="filter_box">Search</label>
       <input type="text" id="filter_box">
     </form>
-    <div data-bind="foreach: locations">
-      <ul>
+      <ul data-bind="foreach: locations">
         <li data-bind="text: title, click: $parent.showMarker" id="placesList"></li>
-      </ul>
-    </div>
+    </ul>
   </div>
   <span onclick="openNav()" class="open-nav-button">&#9776;</span>
   <main>
