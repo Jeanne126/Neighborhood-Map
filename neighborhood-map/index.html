@@ -5,8 +5,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Neighborhood Map</title>
-
-
   <link rel="stylesheet" href="css/navbar.css">
   <link rel="stylesheet" href="css/main.css">
 </head>
@@ -18,8 +16,8 @@
       Welcome to Pittsburgh
     </div>
     <form>
+      <label for="filter_box">Search</label>
       <input type="text" id="filter_box">
-      <button type="submit" data-bind="click: filter">Filter</button>
     </form>
     <div data-bind="foreach: locations">
       <ul>
