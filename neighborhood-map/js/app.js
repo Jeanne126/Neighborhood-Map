@@ -100,9 +100,9 @@
             //ajax加载wikipeida
             var wikiUrl='https://en.wikipedia.org/w/api.php?action=opensearch&search=' + marker.title + '&format=json&callback=wikiCallback';
             //jsonp请求失败的处理方法
-            /*var wikiRequestTimeout = setTimeout(function () {
+            var wikiRequestTimeout = setTimeout(function () {
                 alert ("Failed to get Wikipedia resources");
-            }, 5000);*/
+            }, 5000);
             //使用ajax的jsonp
             $.ajax({
                 type:'GET',
