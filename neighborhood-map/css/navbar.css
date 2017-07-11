@@ -1,0 +1,59 @@
+.sidenav {
+    height: calc(100% - 80px); 
+    width: 0; 
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden; 
+    padding-top: 60px;
+    transition: 0.3s; 
+}
+
+.sidenav a, .sidenav form, .sidenav ul {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s
+}
+h3{
+    color: #818181;
+    text-align: center;
+}
+.sidenav label{
+    color: white;
+    font-size: 20px;
+}
+
+.sidenav li{
+    list-style: none;
+    color: #818181;
+    font-size: 15px;
+    padding: 5px;
+    margin-left: 5px;
+}
+
+
+.sidenav li:hover, .offcanvas li:focus{
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+
+.open-nav-button {
+    font-size:30px;
+    cursor:pointer;
+    color: white;
+    margin-left: 20px;
+}
+
