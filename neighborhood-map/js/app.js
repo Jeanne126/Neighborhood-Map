@@ -99,10 +99,7 @@
 
             //ajax加载wikipeida
             var wikiUrl='https://en.wikipedia.org/w/api.php?action=opensearch&search=' + marker.title + '&format=json&callback=wikiCallback';
-            //jsonp请求失败的处理方法
-            var wikiRequestTimeout = setTimeout(function () {
-                alert ("Failed to get Wikipedia resources");
-            }, 5000);
+
             //使用ajax的jsonp
             $.ajax({
                 type:'GET',
@@ -121,30 +118,38 @@
             }
         var viewModel=function(){
         var self=this;
-        self.placeList=ko.observableArray(locations);
+        self.query=ko.observable('');
+        self.locations=ko.computed(function(){
+            if(!self.query()){
+                return locations;
+                marker.setVisible(true);
+            }else{
+                return locations.filter(function(locations){
+                    return locations.title.toLowerCase().indexOf(self.query().toLowerCase())!= -1;               
+                });
+            }
+        });
+
+        this.markers=ko.computed(function(){
+            if(locations.title=self.title){
+                marker.setVisible(true);
+            }else{
+                marker.setVisible(false);
+            }
+        });
 
         self.showMarker = function (placeList) {
             google.maps.event.trigger(marker, 'click');
             
         };
-        /*self.setMarker=function(title, visible) {
-            markers.forEach(function(marker) {
-                if (marker.title == title) {
-                    if (visible) {
-                        marker.setMap(map);
-                    } else {
-                        marker.setMap(null);
-                    };
-                };
-            });
-        };*/
-        }
-        }
-       
+
+       }
+     }
+    //绑定viewModel()   
     ko.applyBindings(new viewModel()); 
 
     }
-    //绑定viewModel()
+    
 
 
     //错误加载处理
