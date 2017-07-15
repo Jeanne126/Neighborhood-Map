@@ -141,24 +141,21 @@
         };
 
         // 过滤右侧地图markers 
-        //self.markers=ko.observable(locations);  
-        self.filterMarkers = ko.computed(function() {            
-            // 如果 input 没有输入
+        self.query.subscribe(function(location) {
+            //如果input没有输入
             if (!self.query()) {
-                markers.forEach(function(marker){
-                    locations.forEach(function(location) {
-                        marker.setVisible(true);
-                    });
+                self.locations().forEach(function(location) {
+                    setMarker(location.title(),true);
                 });
-            } else {
-                markers.forEach(function(marker){
-                    locations.forEach(function(location) {
-                    // 输入框匹配条件
-                        var matched = location.title.toLowerCase().indexOf(self.query().toLowerCase()) !== -1;
-                        marker.setVisible(matched);
-                    });
-                });
-            }
+            };
+            self.locations().forEach(function(location) {
+                // 输入框匹配条件
+                if (location.title.toLowerCase().indexOf(self.query().toLowerCase()) !== -1) {
+                    setMarker(location.title(),true);
+                } else {
+                    setMarker(location.title(),false);
+                };
+            });
         });
     }  
 
