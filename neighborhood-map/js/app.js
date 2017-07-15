@@ -125,7 +125,6 @@
         self.locations=ko.computed(function(){
             if(!self.query()){
                 return locations;
-                marker.setVisible(true);
             }else{
                 return locations.filter(function(locations){
                     return locations.title.toLowerCase().indexOf(self.query().toLowerCase())!= -1;               
