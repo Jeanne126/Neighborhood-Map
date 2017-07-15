@@ -156,7 +156,7 @@
             });
         };
 
-       }
+       
         // 过滤右侧地图markers 
         self.markers=ko.observable(locations);  
         self.filterMarkers = ko.computed(function() {           
