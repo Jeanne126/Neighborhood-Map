@@ -145,16 +145,6 @@
                 }
             });
         };
-        //点击地点列表，地图显示对应marker的infowindow
-        self.showMarker=function(locations){
-            this.markers=ko.observable(locations);
-            markers.forEach(function(marker){
-                if (marker.title==locations.title) {
-                    google.maps.event.trigger(marker, "click");
-                    //console.log(marker);
-                };
-            });
-        };
 
        
         // 过滤右侧地图markers 
