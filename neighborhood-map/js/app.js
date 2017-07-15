@@ -116,6 +116,9 @@
                     alert('something wrong');
                 });            
             }
+        }
+        
+        
         var viewModel=function(){
         var self=this;
         self.query=ko.observable('');
@@ -130,13 +133,18 @@
             }
         });
 
-        this.markers=ko.computed(function(){
-            if(locations.title=self.title){
-                marker.setVisible(true);
-            }else{
-                marker.setVisible(false);
-            }
-        });
+        
+        //点击列表，地图显示相应marker的infowindow
+        self.showMarker=function(locations){
+            //self.markers=ko.observable(locations);
+            //console.log(markers);
+            markers.forEach(function(marker){
+                if (marker.title==locations.title) {
+                    google.maps.event.trigger(marker, "click");
+                    //console.log(marker);
+                }
+            });
+        };
         //点击地点列表，地图显示对应marker的infowindow
         self.showMarker=function(locations){
             this.markers=ko.observable(locations);
@@ -149,13 +157,29 @@
         };
 
        }
+        // 过滤右侧地图markers 
+        self.markers=ko.observable(locations);  
+        self.filterMarkers = ko.computed(function() {           
+            // 如果 input 没有输入
+            if (!self.query()) {
+                markers.forEach(function(marker){
+                    locations.forEach(function(lcoation) {
+                        marker.setVisible(true);
+                    });
+                });
+            } else {
+                markers.forEach(function(marker){
+                    locations.forEach(function(location) {
+                    // 输入框匹配条件
+                        var matched = location.title.toLowerCase().indexOf(self.query().toLowerCase()) !== -1;
+                        marker.setVisible(matched);
+                    });
+                });
+            }
+        });
      }
     //绑定viewModel()   
     ko.applyBindings(new viewModel()); 
-
-    }
-    
-
 
     //错误加载处理
     function errorHandling(){
