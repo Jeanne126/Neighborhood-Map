@@ -146,7 +146,7 @@
             // 如果 input 没有输入
             if (!self.query()) {
                 markers.forEach(function(marker){
-                    locations.forEach(function(lcoation) {
+                    locations.forEach(function(location) {
                         marker.setVisible(true);
                     });
                 });
