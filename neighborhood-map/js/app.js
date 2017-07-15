@@ -23,11 +23,11 @@
         ];
 
     var map;
-    var markers = [];
+    var markers=[];
     var infoWindow=null;
     var defaultIcon;
     var highlightedIcon;
-    var viewModel;
+
     //构造新地图
     function initMap(){
         map = new google.maps.Map(document.getElementById('map'),{
@@ -50,8 +50,6 @@
     var defaultIcon = makeMarkerIcon('0091ff'); 
     var highlightedIcon = makeMarkerIcon('FFFF24'); 
 
-
-
     var infoWindow = new google.maps.InfoWindow();
 
     //创造初始化marker数组
@@ -71,13 +69,10 @@
         //鼠标经过marker显示高亮颜色
         marker.addListener('mouseover', function() {
           this.setIcon(highlightedIcon);
-          //viewModel().select(this.title);
         });
         //鼠标离开marker显示默认颜色
         marker.addListener('mouseout', function() {
           this.setIcon(defaultIcon);
-          //viewModel().unselect(this.title);
-
         });
 
 
@@ -97,45 +92,45 @@
             
                 
 
-            //ajax加载wikipeida
-            var wikiUrl='https://en.wikipedia.org/w/api.php?action=opensearch&search=' + marker.title + '&format=json&callback=wikiCallback';
+        //ajax加载wikipeida
+        var wikiUrl='https://en.wikipedia.org/w/api.php?action=opensearch&search=' + marker.title + '&format=json&callback=wikiCallback';
 
-            //使用ajax的jsonp
-            $.ajax({
-                type:'GET',
-                url:wikiUrl,
-                dataType:'jsonp'
-                }).done(function(response){
-                    var articleList=response[1];
-                    for (var i = 0; i < articleList.length; i++) {
-                        articleStr= articleList[i];
-                        }
-                   infoWindow.setContent('<div>' + marker.title + '</div>'+'<br>'+'<a href ="'+wikiUrl+'">' + articleStr + '</a>');
-                   
-                }).fail(function(){   
-                    alert('something wrong');
-                });            
-            }
+        //使用ajax的jsonp
+        $.ajax({
+            type:'GET',
+            url:wikiUrl,
+            dataType:'jsonp',
+            }).done(function(response){
+                var articleList=response[1];
+                for (var i = 0; i < articleList.length; i++) {
+                    articleStr= articleList[i];
+                    }
+               infoWindow.setContent('<div>' + marker.title + '</div>'+'<br>'+'<a href ="'+wikiUrl+'">' + articleStr + '</a>');
+               
+            }).fail(function(){   
+                alert('something wrong');
+            });            
         }
-    }   
-        
+            
+    }
+    }  
         var viewModel=function(){
         var self=this;
         self.query=ko.observable('');
+        //console.log(markers);
         self.locations=ko.computed(function(){
             if(!self.query()){
                 return locations;
             }else{
-                return locations.filter(function(locations){
-                    return locations.title.toLowerCase().indexOf(self.query().toLowerCase())!= -1;               
+                return locations.filter(function(locations,markers){
+                    return locations.title.toLowerCase().indexOf(self.query().toLowerCase())!== -1; 
                 });
             }
         });
 
-        
+
         //点击列表，地图显示相应marker的infowindow
         self.showMarker=function(locations){
-            //self.markers=ko.observable(locations);
             //console.log(markers);
             markers.forEach(function(marker){
                 if (marker.title==locations.title) {
@@ -145,10 +140,9 @@
             });
         };
 
-       
         // 过滤右侧地图markers 
-        self.markers=ko.observable(locations);  
-        self.filterMarkers = ko.computed(function() {           
+        //self.markers=ko.observable(locations);  
+        self.filterMarkers = ko.computed(function() {            
             // 如果 input 没有输入
             if (!self.query()) {
                 markers.forEach(function(marker){
@@ -166,16 +160,15 @@
                 });
             }
         });
-     }
-    //绑定viewModel()   
-    ko.applyBindings(new viewModel()); 
+    }  
 
+    //绑定viewModel()   
+    ko.applyBindings(new viewModel());
+    
     //错误加载处理
     function errorHandling(){
       alert('Google Maps has failed to load.Please check your internet connection.');
     }
-
-
 
 
 
