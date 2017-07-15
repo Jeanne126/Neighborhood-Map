@@ -17,7 +17,7 @@
     </div>
     <form>
       <label for="filter_box">Search</label>
-      <input type="text" id="filter_box">
+      <input type="text" id="filter_box" data-bind="textInput: query">
     </form>
       <ul data-bind="foreach: locations">
         <li data-bind="text: title, click: $parent.showMarker" id="placesList"></li>
