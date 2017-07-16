@@ -142,20 +142,21 @@
 
         // 过滤右侧地图markers 
         self.query.subscribe(function(location) {
-            //如果input没有输入
+        // 每次输入事件触发，就遍历 markers 数组
+        markers.forEach(function(marker) {
+            // 默认显示所有 markers
             if (!self.query()) {
-                self.locations().forEach(function(location) {
-                    setMarker(location.title(),true);
-                });
-            };
-            self.locations().forEach(function(location) {
-                // 输入框匹配条件
-                if (location.title.toLowerCase().indexOf(self.query().toLowerCase()) !== -1) {
-                    setMarker(location.title(),true);
-                } else {
-                    setMarker(location.title(),false);
-                };
-            });
+                marker.setVisible(true);
+            } else {
+                // 匹配条件
+                var isMatched = marker.title.toLowerCase().indexOf(self.query().toLowerCase()) != -1;
+                // 将没有匹配的 marker 隐藏
+                if (!isMatched) {
+                    marker.setVisible(false);
+                }
+            }
+
+        });
         });
     }  
 
